@@ -13,11 +13,11 @@
         <dgm:operations/>
     </dgm:gService>
     <dgm:gReference name="LookupCoherence">
-        <dgm:body borderWidth="2" arcRad="20" X="792" Y="26" width="136" height="54">
+        <dgm:body borderWidth="2" arcRad="20" X="582" Y="26" width="136" height="54">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="782" Y="19" width="156" height="68">
+        <dgm:shadow arcRad="20" X="572" Y="19" width="156" height="68">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="LookupCoherence" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
@@ -25,11 +25,11 @@
         <dgm:operations/>
     </dgm:gReference>
     <dgm:gReference name="JMSSyncDMZ">
-        <dgm:body borderWidth="2" arcRad="20" X="792" Y="114" width="136" height="54">
+        <dgm:body borderWidth="2" arcRad="20" X="582" Y="114" width="136" height="54">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="782" Y="107" width="156" height="68">
+        <dgm:shadow arcRad="20" X="572" Y="107" width="156" height="68">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="JMSSyncDMZ" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
@@ -37,11 +37,11 @@
         <dgm:operations/>
     </dgm:gReference>
     <dgm:gReference name="JMSSyncApp">
-        <dgm:body borderWidth="2" arcRad="20" X="792" Y="202" width="136" height="54">
+        <dgm:body borderWidth="2" arcRad="20" X="582" Y="202" width="136" height="54">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="782" Y="195" width="156" height="68">
+        <dgm:shadow arcRad="20" X="572" Y="195" width="156" height="68">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="JMSSyncApp" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
@@ -49,12 +49,12 @@
         <dgm:operations/>
     </dgm:gReference>
     <dgm:gComponent name="Pipeline">
-        <dgm:body borderWidth="2" arcRad="20" X="410" Y="85" width="130" height="111">
+        <dgm:body borderWidth="2" arcRad="20" X="305" Y="85" width="130" height="111">
             <dgm:borderColor r="109" g="136" b="65"/>
             <dgm:lightBgColor r="201" g="224" b="155"/>
             <dgm:darkBgColor r="157" g="195" b="93"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="400" Y="78" width="150" height="127">
+        <dgm:shadow arcRad="20" X="295" Y="78" width="150" height="127">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="__service__" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
@@ -64,28 +64,28 @@
         <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_pipeline_20x20.gif" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gWireLink source="BS.SyncTransaction" target="Pipeline/__service__" width="2">
-        <dgm:gSegment X1="168" Y1="110" X2="400" Y2="110"/>
+        <dgm:gSegment X1="168" Y1="110" X2="295" Y2="110"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="Pipeline/businessservice.-1712906874.LookupCoherence" target="LookupCoherence" width="2">
-        <dgm:gSegment X1="550" Y1="110" X2="574" Y2="110"/>
-        <dgm:gSegment X1="574" Y1="110" X2="574" Y2="36"/>
-        <dgm:gSegment X1="574" Y1="36" X2="782" Y2="36"/>
+        <dgm:gSegment X1="445" Y1="110" X2="469" Y2="110"/>
+        <dgm:gSegment X1="469" Y1="110" X2="469" Y2="36"/>
+        <dgm:gSegment X1="469" Y1="36" X2="572" Y2="36"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="Pipeline/businessservice.-1712906874.JMSSyncDMZ" target="JMSSyncDMZ" width="2">
-        <dgm:gSegment X1="550" Y1="135" X2="589" Y2="135"/>
-        <dgm:gSegment X1="589" Y1="135" X2="589" Y2="124"/>
-        <dgm:gSegment X1="589" Y1="124" X2="782" Y2="124"/>
+        <dgm:gSegment X1="445" Y1="135" X2="484" Y2="135"/>
+        <dgm:gSegment X1="484" Y1="135" X2="484" Y2="124"/>
+        <dgm:gSegment X1="484" Y1="124" X2="572" Y2="124"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="Pipeline/businessservice.-1712906874.JMSSyncApp" target="JMSSyncApp" width="2">
-        <dgm:gSegment X1="550" Y1="160" X2="574" Y2="160"/>
-        <dgm:gSegment X1="574" Y1="160" X2="574" Y2="212"/>
-        <dgm:gSegment X1="574" Y1="212" X2="782" Y2="212"/>
+        <dgm:gSegment X1="445" Y1="160" X2="469" Y2="160"/>
+        <dgm:gSegment X1="469" Y1="160" X2="469" Y2="212"/>
+        <dgm:gSegment X1="469" Y1="212" X2="572" Y2="212"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
