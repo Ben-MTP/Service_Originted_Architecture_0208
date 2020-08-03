@@ -1,0 +1,10 @@
+<response xmlns="http://vasplatform.mobifone.vn">
+   <STATUS>STATUS21</STATUS>
+   <STATUS_MESSAGE>STATUS_MESSAGE22</STATUS_MESSAGE>
+   <Parameters>
+      <Parameter>
+         <name>name23</name>
+         <value>value24</value>
+      </Parameter>
+   </Parameters>
+</response>

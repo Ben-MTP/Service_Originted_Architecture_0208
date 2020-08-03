@@ -1,0 +1,49 @@
+<wsdl:definitions name="process" targetNamespace="http://xmlns.oracle.com/VASplatformSOA/SOABuildTemplate/process" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/VASplatformSOA/SOABuildTemplate/process" xmlns:ns1="http://vasplatform.mobifone.vn" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:cor="http://xmlns.oracle.com/VASplatformSOA/SOABuildTemplate/process/correlationset" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:documentation>
+        <abstractWSDL>http://localhost:7101/soa-infra/services/default/Project4!1.0/WSDLs/process.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="process">
+        <plnk:role name="processProvider" portType="client:process"/>
+    </plnk:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:msisdn" messageType="client:processRequestMessage" part="payload">
+        <vprop:query>ns1:Parameters/ns1:Parameter[ns1:name = 'MSISDN']/ns1:value</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:service_code" messageType="client:processRequestMessage" part="payload">
+        <vprop:query>ns1:Parameters/ns1:Parameter[ns1:name = 'SERVICE_CODE']/ns1:value</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="http://xmlns.oracle.com/VASplatformSOA/SOABuildTemplate/process/correlationset" location="WSDL_224195794.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://vasplatform.mobifone.vn" schemaLocation="XMLSchema_794054185.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="processRequestMessage">
+        <wsdl:part name="payload" element="ns1:request"/>
+    </wsdl:message>
+    <wsdl:message name="processResponseMessage">
+        <wsdl:part name="payload" element="ns1:response"/>
+    </wsdl:message>
+    <wsdl:portType name="process">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:processRequestMessage"/>
+            <wsdl:output message="client:processResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="processBinding" type="client:process">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="process_ep">
+        <wsdl:port name="process_pt" binding="client:processBinding">
+            <soap:address location="http://localhost:7101/soa-infra/services/default/Project4!1.0*soa_5c93c307-cf62-4a44-be37-8cce7bb53acb/process_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

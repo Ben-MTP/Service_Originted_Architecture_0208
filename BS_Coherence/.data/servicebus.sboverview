@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns:composite xmlns:ns="http://xmlns.oracle.com/sca/1.0">
+    <ns:reference>
+        <ns:interface src="BusinessService:BS_Coherence/Put"/>
+    </ns:reference>
+    <ns:reference>
+        <ns:interface src="BusinessService:BS_Coherence/Query"/>
+    </ns:reference>
+    <ns:reference>
+        <ns:interface src="BusinessService:BS_Coherence/Remove"/>
+    </ns:reference>
+    <ns:reference>
+        <ns:interface src="BusinessService:BS_Coherence/Get"/>
+    </ns:reference>
+</ns:composite>

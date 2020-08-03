@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/VASPLatformServiceBus/BS.SMSGW/SendSMSMTLater" name="SendSMSMTLater-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="SendSMSMTLater.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/VASPLatformServiceBus/BS.SMSGW/SendSMSMTLater"/>
+    <wsdl:binding name="SendSMSMTLater_ptt-binding" type="sen:SendSMSMTLater_ptt" xmlns:sen="http://xmlns.oracle.com/pcbpel/adapter/db/VASPLatformServiceBus/BS.SMSGW/SendSMSMTLater">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="SendSMSMTLater">
+            <soap:operation soapAction="SendSMSMTLater"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

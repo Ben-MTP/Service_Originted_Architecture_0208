@@ -1,0 +1,13 @@
+<adapter-config name="socketReference" adapter="socket" wsdlLocation="socketReference.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/socket/SocketAdapter"/>
+  <endpoint-interaction portType="OutboundRequestReply_ptt" operation="OutboundRequestReply" UITransmissionPrimitive="OutboundRequestReply">
+    <interaction-spec className="oracle.tip.adapter.socket.SocketInteractionSpec">
+      <property name="Port" value="5555"/>
+      <property name="Host" value="127.0.0.1"/>
+      <property name="Xslt" value="invoke.xsl"/>
+      <property name="TransMode" value="XSLT"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

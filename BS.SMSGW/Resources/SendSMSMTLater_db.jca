@@ -1,0 +1,13 @@
+<adapter-config name="SendSMSMTLater" adapter="db" wsdlLocation="SendSMSMTLater.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="vas_platform" location="eis/DB/vas_platform"/>
+  <endpoint-interaction portType="SendSMSMTLater_ptt" operation="SendSMSMTLater">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="VAS_PLATFORM"/>
+      <property name="PackageName" value="SOA_PACKAGE_DATA"/>
+      <property name="ProcedureName" value="ADD_SMSMT_LATER"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

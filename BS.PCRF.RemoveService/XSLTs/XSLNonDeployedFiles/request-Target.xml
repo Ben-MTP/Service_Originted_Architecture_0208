@@ -1,0 +1,4 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ns0:content xmlns:ns0="http://vasplatform.mobifone.vn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vasplatform.mobifone.vn file:/E:/NEO/2019/8.VasPlatform/5.DocumentModules/14.ProjectMiddleware/VASPLatformServiceBus/BS.PCRF.AddService/Schemas/NEOFormat.xsd">
+   <ns0:value>METHOD=AddService -name1=value2 -name3=value4 -name5=value6</ns0:value>
+</ns0:content>

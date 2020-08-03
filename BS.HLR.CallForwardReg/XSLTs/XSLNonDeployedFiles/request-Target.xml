@@ -1,0 +1,4 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<content xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vasplatform.mobifone.vn file:/D:/NEO/2019/8.VasPlatform/5.DocumentModules/14.ProjectMiddleware/VASPLatformServiceBus/BS.HLR.CallForwardReg/Schemas/NEOFormat.xsd">
+   <value>METHOD=CALLFORWARD -P_CMD=1 -SERCODE=04 -name5=value6</value>
+</content>

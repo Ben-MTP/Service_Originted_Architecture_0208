@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="BS.SyncTransaction/WSDLs/NEOwebservice"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/VASPLatformServiceBus/BS.Diameter/NEOwebservice</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-afc1d12.60368aa6.0.16f3372f81b.N7f42">
+            <con:stage id="_StageId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7ffe" name="Stage1" errorHandler="error-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7e67">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con3:wsCallout>
+                        <con1:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7ffd</con1:id>
+                        <con3:service ref="BS.SyncTransaction/LookupCoherence" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>Get</con3:operation>
+                        <con3:request>
+                            <con3:body wrapped="false">outbound</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body wrapped="false">responseCoherence</con3:body>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con1:assign varName="cacheKey" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con2:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7f98</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>concat('SYNC_', $body/vas:request/vas:Parameters/vas:Parameter[vas:name = 'SERVICE_CODE']/vas:value, '_', $body/vas:request/vas:Parameters/vas:Parameter[vas:name = 'FORWARD_TYPE']/vas:value)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:insert varName="outbound" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con2:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7f92</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>$outbound/ctx:transport/ctx:request/tp:headers</con2:xpathText>
+                                </con1:location>
+                                <con1:where>first-child</con1:where>
+                                <con1:expr>
+                                    <con2:xqueryText>&lt;jca:jca.coherence.Key>{$cacheKey}&lt;/jca:jca.coherence.Key></con2:xqueryText>
+                                </con1:expr>
+                            </con1:insert>
+                        </con3:requestTransform>
+                        <con3:responseTransform/>
+                    </con3:wsCallout>
+                    <con4:ifThenElse xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:comment/>
+                        <con1:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7f26</con1:id>
+                        <con2:case id="_BranchId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7f25">
+                            <con2:condition>
+                                <con1:xqueryText>not($responseCoherence/*:CacheValue)</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:Error>
+                                    <con1:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7f24</con1:id>
+                                    <con2:errCode>00001</con2:errCode>
+                                    <con2:message/>
+                                </con2:Error>
+                            </con2:actions>
+                        </con2:case>
+                    </con4:ifThenElse>
+                    <con4:assign varName="requestService" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7eed</con1:id>
+                        <con2:expr>
+                            <con1:xsltTransform>
+                                <con1:resource ref="BS.SyncTransaction/XSLTs/RequestToSync"/>
+                                <con1:input>$body/vas:request</con1:input>
+                                <con1:param name="cacheValue">
+                                    <con1:path>$responseCoherence</con1:path>
+                                </con1:param>
+                            </con1:xsltTransform>
+                        </con2:expr>
+                    </con4:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-afc1d12.60368aa6.0.16f3372f81b.N7f41">
+            <con:stage id="_StageId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7dfb" name="Catch Exception" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://bs_diameter.vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id>_ActionId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7dfa</con1:id>
+                        <con2:location>
+                            <con1:xpathText>$body</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<tns:response xmlns:tns="http://vasplatform.mobifone.vn">
+   <tns:STATUS>1</tns:STATUS>
+   <tns:STATUS_MESSAGE>SUCCESS</tns:STATUS_MESSAGE>
+</tns:response>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con5:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7df9</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-afc1d0f.3a337834.0.16f8823cbd8.N7fcf">
+            <con:stage id="_StageId-afc1d0f.3a337834.0.16f8823cbd8.N7f33" name="Catch Exception" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://bs_diameter.vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con1:reply>
+                        <con1:id>_ActionId-afc1d0f.3a337834.0.16f8823cbd8.N7f31</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7e67">
+            <con:stage id="_StageId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7ca4" name="Catch Exception" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://bs_diameter.vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7ca3</con1:id>
+                        <con2:case id="_BranchId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7ca2">
+                            <con2:condition>
+                                <con1:xqueryText>fn-bea:inlinedXML($fault/ctx:errorCode) = '00001'</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                    <con1:id>_ActionId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7ca1</con1:id>
+                                    <con2:location>
+                                        <con1:xpathText>$body</con1:xpathText>
+                                    </con2:location>
+                                    <con2:expr>
+                                        <con1:xqueryText><![CDATA[<tns:response  xmlns:tns="http://vasplatform.mobifone.vn">
+   <tns:STATUS>0</tns:STATUS>
+   <tns:STATUS_MESSAGE>Not found forward type</tns:STATUS_MESSAGE>
+</tns:response>]]></con1:xqueryText>
+                                    </con2:expr>
+                                </con5:replace>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con1:id>_ActionId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7ca0</con1:id>
+                                <con2:location>
+                                    <con1:xpathText>$body</con1:xpathText>
+                                </con2:location>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<tns:response  xmlns:tns="http://vasplatform.mobifone.vn">
+   <tns:STATUS>0</tns:STATUS>
+   <tns:STATUS_MESSAGE>BS.SyncTransaction Exception</tns:STATUS_MESSAGE>
+   <tns:Parameters>
+            <tns:Parameter>
+               <tns:name>FAULT_CODE</tns:name>
+               <tns:value>{fn-bea:inlinedXML($fault/ctx:errorCode)}</tns:value>
+            </tns:Parameter>
+            <tns:Parameter>
+               <tns:name>FAULT_STRING</tns:name>
+               <tns:value>{fn-bea:inlinedXML($fault/ctx:reason)}</tns:value>
+            </tns:Parameter>
+         </tns:Parameters>
+</tns:response>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con5:replace>
+                        </con2:default>
+                    </con2:ifThenElse>
+                    <con1:reply>
+                        <con1:id>_ActionId-N3f57c3ff.N5702f1dc.0.16fb6d50ced.N7c9f</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-afc1d12.60368aa6.0.16f3372f81b.N7f42</con:request>
+                <con:response>response-afc1d12.60368aa6.0.16f3372f81b.N7f41</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" error-handler="error-afc1d0f.3a337834.0.16f8823cbd8.N7fcf">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con2:routingTable>
+                        <con1:id>_ActionId-afc1d12.60368aa6.0.16f3372f81b.N7f77</con1:id>
+                        <con2:expression>
+                            <con1:xqueryText>$requestService/vas:Parameters/vas:Parameter[vas:name = 'ZONE_ID']/vas:value</con1:xqueryText>
+                        </con2:expression>
+                        <con2:case id="_BranchId-afc1d12.60368aa6.0.16f3372f81b.N7f76">
+                            <con2:operator>equals</con2:operator>
+                            <con2:value>'0'</con2:value>
+                            <con2:route>
+                                <con1:id>_ActionId-afc1d12.60368aa6.0.16f3372f81b.N7f75</con1:id>
+                                <con2:service ref="BS.SyncTransaction/JMSSyncDMZ" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con2:outboundTransform>
+                                    <con3:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7eea</con1:id>
+                                        <con3:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con3:location>
+                                        <con3:expr>
+                                            <con1:xqueryText>$requestService</con1:xqueryText>
+                                        </con3:expr>
+                                    </con3:replace>
+                                </con2:outboundTransform>
+                                <con2:responseTransform/>
+                            </con2:route>
+                        </con2:case>
+                        <con2:defaultCase>
+                            <con2:route>
+                                <con1:id>_ActionId-afc1d12.60368aa6.0.16f3372f81b.N7f74</con1:id>
+                                <con2:service ref="BS.SyncTransaction/JMSSyncApp" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con2:outboundTransform>
+                                    <con3:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-N3f57c3ff.N630699ae.0.16f7ef324e0.N7eb6</con1:id>
+                                        <con3:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con3:location>
+                                        <con3:expr>
+                                            <con1:xqueryText>$requestService</con1:xqueryText>
+                                        </con3:expr>
+                                    </con3:replace>
+                                </con2:outboundTransform>
+                                <con2:responseTransform/>
+                            </con2:route>
+                        </con2:defaultCase>
+                    </con2:routingTable>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+        <con:partner-links/>
+    </con:router>
+</con:pipelineEntry>

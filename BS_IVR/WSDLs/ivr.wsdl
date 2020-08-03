@@ -1,0 +1,212 @@
+<definitions targetNamespace="urn:click2Call" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:click2Call" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<types>
+<xsd:schema targetNamespace="urn:click2Call">
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+ <xsd:complexType name="return_array_call">
+  <xsd:all>
+   <xsd:element name="call_id" type="xsd:string"/>
+   <xsd:element name="resultcode" type="xsd:string"/>
+   <xsd:element name="resultdesc" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="return_call_record">
+  <xsd:all>
+   <xsd:element name="callid" type="xsd:string"/>
+   <xsd:element name="recordfile" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="return_call_detail">
+  <xsd:all>
+   <xsd:element name="callid" type="xsd:string"/>
+   <xsd:element name="caller" type="xsd:string"/>
+   <xsd:element name="called" type="xsd:string"/>
+   <xsd:element name="servicenum" type="xsd:string"/>
+   <xsd:element name="starttime" type="xsd:string"/>
+   <xsd:element name="stoptime" type="xsd:string"/>
+   <xsd:element name="duration" type="xsd:string"/>
+   <xsd:element name="status" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="return_call_detail_ext">
+  <xsd:all>
+   <xsd:element name="callid" type="xsd:string"/>
+   <xsd:element name="caller" type="xsd:string"/>
+   <xsd:element name="ext" type="xsd:string"/>
+   <xsd:element name="servicenum" type="xsd:string"/>
+   <xsd:element name="starttime" type="xsd:string"/>
+   <xsd:element name="stoptime" type="xsd:string"/>
+   <xsd:element name="duration" type="xsd:string"/>
+   <xsd:element name="status" type="xsd:string"/>
+   <xsd:element name="recordfile" type="xsd:string"/>
+   <xsd:element name="route" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dataArrayCall">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:return_array_call[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="recordCall">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:return_call_record[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="detailCall">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:return_call_detail[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="detailCallExt">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:return_call_detail_ext[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+</xsd:schema>
+</types>
+<message name="RecordingRequest">
+  <part name="REQ_TYPE" type="xsd:string"/>
+  <part name="CALL_ID" type="xsd:string"/>
+  <part name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+  <part name="CP_SP_NAME" type="xsd:string"/>
+  <part name="CAMPAIGN_NAME" type="xsd:string"/>
+  <part name="PLAY_FILE_BEFORE_RECORD" type="xsd:string"/>
+  <part name="FINISH_RECORDING_CONDITION" type="xsd:string"/></message>
+<message name="RecordingResponse">
+  <part name="return" type="tns:dataArrayCall"/></message>
+<message name="PlayFileRequest">
+  <part name="REQ_TYPE" type="xsd:string"/>
+  <part name="CALL_ID" type="xsd:string"/>
+  <part name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+  <part name="CP_SP_NAME" type="xsd:string"/>
+  <part name="CAMPAIGN_NAME" type="xsd:string"/>
+  <part name="LEG1_NUMBER" type="xsd:string"/>
+  <part name="PLAY_FILE" type="xsd:string"/>
+  <part name="PLAY_FILE_COMPLET_ACTION" type="xsd:string"/>
+  <part name="PLAY_FILE_MAX_LOOP_COUNT" type="xsd:string"/>
+  <part name="PLAY_FILE_MAX_LOOP_COUNT_ACTION" type="xsd:string"/>
+  <part name="COLLECT_DTMF" type="xsd:string"/>
+  <part name="COLLECT_DTMF_TIMEOUT" type="xsd:string"/>
+  <part name="COLLECT_DTMF_TIMEOUT_ACTION" type="xsd:string"/>
+  <part name="COLLECT_DTMF_TIMEOUT_FILE_PLAY" type="xsd:string"/>
+  <part name="COLLECT_DTMF_TIMEOUT_MAX_LOOP_COUNT" type="xsd:string"/>
+  <part name="COLLECT_DTMF_MAX_LOOP_COUNT_ACTION" type="xsd:string"/>
+  <part name="COLLECT_DTMF_MAX_LOOP_COUNT_FILE_PLAY" type="xsd:string"/></message>
+<message name="PlayFileResponse">
+  <part name="return" type="tns:dataArrayCall"/></message>
+<message name="MakeTromboneCallRequest">
+  <part name="REQ_TYPE" type="xsd:string"/>
+  <part name="CALL_ID" type="xsd:string"/>
+  <part name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+  <part name="CP_SP_NAME" type="xsd:string"/>
+  <part name="CAMPAIGN_NAME" type="xsd:string"/>
+  <part name="LEG1_NUMBER" type="xsd:string"/>
+  <part name="LEG2_NUMBER" type="xsd:string"/></message>
+<message name="MakeTromboneCallResponse">
+  <part name="return" type="tns:dataArrayCall"/></message>
+<message name="MakeOutgoingCallRequest">
+  <part name="REQ_TYPE" type="xsd:string"/>
+  <part name="CALL_ID" type="xsd:string"/>
+  <part name="LEG1_NUMBER" type="xsd:string"/>
+  <part name="LEG2_NUMBER" type="xsd:string"/>
+  <part name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+  <part name="CP_SP_NAME" type="xsd:string"/>
+  <part name="CAMPAIGN_NAME" type="xsd:string"/>
+  <part name="ANSWER_TIMEOUT" type="xsd:string"/></message>
+<message name="MakeOutgoingCallResponse">
+  <part name="return" type="tns:dataArrayCall"/></message>
+<message name="ReleaseCallRequest">
+  <part name="REQ_TYPE" type="xsd:string"/>
+  <part name="CALL_ID" type="xsd:string"/>
+  <part name="RELEASED_LEG" type="xsd:string"/>
+  <part name="LEG1_NUMBER" type="xsd:string"/>
+  <part name="LEG2_NUMBER" type="xsd:string"/>
+  <part name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+  <part name="CP_SP_NAME" type="xsd:string"/>
+  <part name="CAMPAIGN_NAME" type="xsd:string"/></message>
+<message name="ReleaseCallResponse">
+  <part name="return" type="tns:dataArrayCall"/></message>
+<message name="setExtStateRequest">
+  <part name="ext" type="xsd:string"/>
+  <part name="stateid" type="xsd:string"/></message>
+<message name="setExtStateResponse">
+  <part name="return" type="tns:dataArrayCall"/></message>
+<portType name="click2CallPortType">
+  <operation name="Recording">
+    <documentation>Recording</documentation>
+    <input message="tns:RecordingRequest"/>
+    <output message="tns:RecordingResponse"/>
+  </operation>
+  <operation name="PlayFile">
+    <documentation>PlayFile</documentation>
+    <input message="tns:PlayFileRequest"/>
+    <output message="tns:PlayFileResponse"/>
+  </operation>
+  <operation name="MakeTromboneCall">
+    <documentation>MakeTromboneCall</documentation>
+    <input message="tns:MakeTromboneCallRequest"/>
+    <output message="tns:MakeTromboneCallResponse"/>
+  </operation>
+  <operation name="MakeOutgoingCall">
+    <documentation>MakeOutgoingCall</documentation>
+    <input message="tns:MakeOutgoingCallRequest"/>
+    <output message="tns:MakeOutgoingCallResponse"/>
+  </operation>
+  <operation name="ReleaseCall">
+    <documentation>ReleaseCall</documentation>
+    <input message="tns:ReleaseCallRequest"/>
+    <output message="tns:ReleaseCallResponse"/>
+  </operation>
+  <operation name="setExtState">
+    <documentation>Set Trang Thai Extention</documentation>
+    <input message="tns:setExtStateRequest"/>
+    <output message="tns:setExtStateResponse"/>
+  </operation>
+</portType>
+<binding name="click2CallBinding" type="tns:click2CallPortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="Recording">
+    <soap:operation soapAction="urn:click2Call#Recording" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="PlayFile">
+    <soap:operation soapAction="urn:click2Call#PlayFile" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="MakeTromboneCall">
+    <soap:operation soapAction="urn:click2Call#MakeTromboneCall" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="MakeOutgoingCall">
+    <soap:operation soapAction="urn:click2Call#MakeOutgoingCall" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="ReleaseCall">
+    <soap:operation soapAction="urn:click2Call#ReleaseCall" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="setExtState">
+    <soap:operation soapAction="urn:click2Call#setExtState" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:click2Call" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="click2Call">
+  <port name="click2CallPort" binding="tns:click2CallBinding">
+    <soap:address location="http://10.54.146.220/neo/connectdemo.php"/>
+  </port>
+</service>
+</definitions>

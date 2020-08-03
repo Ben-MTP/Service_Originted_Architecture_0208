@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:click2Call" targetNamespace="urn:click2Call"
+            elementFormDefault="qualified">
+  <xsd:complexType name="return_array_call">
+    <xsd:all>
+      <xsd:element name="call_id" type="xsd:string"/>
+      <xsd:element name="resultcode" type="xsd:string"/>
+      <xsd:element name="resultdesc" type="xsd:string"/>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="return_call_record">
+    <xsd:all>
+      <xsd:element name="callid" type="xsd:string"/>
+      <xsd:element name="recordfile" type="xsd:string"/>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="return_call_detail">
+    <xsd:all>
+      <xsd:element name="callid" type="xsd:string"/>
+      <xsd:element name="caller" type="xsd:string"/>
+      <xsd:element name="called" type="xsd:string"/>
+      <xsd:element name="servicenum" type="xsd:string"/>
+      <xsd:element name="starttime" type="xsd:string"/>
+      <xsd:element name="stoptime" type="xsd:string"/>
+      <xsd:element name="duration" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="return_call_detail_ext">
+    <xsd:all>
+      <xsd:element name="callid" type="xsd:string"/>
+      <xsd:element name="caller" type="xsd:string"/>
+      <xsd:element name="ext" type="xsd:string"/>
+      <xsd:element name="servicenum" type="xsd:string"/>
+      <xsd:element name="starttime" type="xsd:string"/>
+      <xsd:element name="stoptime" type="xsd:string"/>
+      <xsd:element name="duration" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="recordfile" type="xsd:string"/>
+      <xsd:element name="route" type="xsd:string"/>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="dataArrayCall">
+    <xsd:sequence>
+      <xsd:element name="item" type="return_array_call" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="recordCall">
+    <xsd:sequence>
+      <xsd:element name="item" type="return_call_record" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="detailCall">
+    <xsd:sequence>
+      <xsd:element name="item" type="return_call_detail" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="detailCallExt">
+    <xsd:sequence>
+      <xsd:element name="item" type="return_call_detail_ext" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- RecordingRequest -->
+  <xsd:element name="Recording">
+    <xsd:annotation>
+      <xsd:documentation>format RecordingRequest</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="REQ_TYPE" type="xsd:string"/>
+        <xsd:element name="CALL_ID" type="xsd:string"/>
+        <xsd:element name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+        <xsd:element name="CP_SP_NAME" type="xsd:string"/>
+        <xsd:element name="CAMPAIGN_NAME" type="xsd:string"/>
+        <xsd:element name="PLAY_FILE_BEFORE_RECORD" type="xsd:string"/>
+        <xsd:element name="FINISH_RECORDING_CONDITION" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- RecordingResponse -->
+  <xsd:element name="RecordingResponse">
+    <xsd:annotation>
+      <xsd:documentation>format RecordingResponse</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="return" type="dataArrayCall"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- PlayFileRequest -->
+  <xsd:element name="PlayFile">
+    <xsd:annotation>
+      <xsd:documentation>format PlayFileRequest</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="REQ_TYPE" type="xsd:string"/>
+        <xsd:element name="CALL_ID" type="xsd:string"/>
+        <xsd:element name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+        <xsd:element name="CP_SP_NAME" type="xsd:string"/>
+        <xsd:element name="CAMPAIGN_NAME" type="xsd:string"/>
+        <xsd:element name="LEG1_NUMBER" type="xsd:string"/>
+        <xsd:element name="PLAY_FILE" type="xsd:string"/>
+        <xsd:element name="PLAY_FILE_COMPLET_ACTION" type="xsd:string"/>
+        <xsd:element name="PLAY_FILE_MAX_LOOP_COUNT" type="xsd:string"/>
+        <xsd:element name="PLAY_FILE_MAX_LOOP_COUNT_ACTION" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF_TIMEOUT" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF_TIMEOUT_ACTION" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF_TIMEOUT_FILE_PLAY" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF_TIMEOUT_MAX_LOOP_COUNT" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF_MAX_LOOP_COUNT_ACTION" type="xsd:string"/>
+        <xsd:element name="COLLECT_DTMF_MAX_LOOP_COUNT_FILE_PLAY" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- PlayFileResponse -->
+  <xsd:element name="PlayFileResponse">
+    <xsd:annotation>
+      <xsd:documentation>format PlayFileResponse</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="return" type="dataArrayCall"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- MakeTromboneCallRequest -->
+  <xsd:element name="MakeTromboneCall">
+    <xsd:annotation>
+      <xsd:documentation>format MakeTromboneCallRequest</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="REQ_TYPE" type="xsd:string"/>
+        <xsd:element name="CALL_ID" type="xsd:string"/>
+        <xsd:element name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+        <xsd:element name="CP_SP_NAME" type="xsd:string"/>
+        <xsd:element name="CAMPAIGN_NAME" type="xsd:string"/>
+        <xsd:element name="LEG1_NUMBER" type="xsd:string"/>
+        <xsd:element name="LEG2_NUMBER" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- MakeTromboneCallResponse -->
+  <xsd:element name="MakeTromboneCallResponse">
+    <xsd:annotation>
+      <xsd:documentation>format MakeTromboneCallResponse</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="return" type="dataArrayCall"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- MakeOutgoingCallRequest -->
+  <xsd:element name="MakeOutgoingCall">
+    <xsd:annotation>
+      <xsd:documentation>format MakeOutgoingCallRequest</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="REQ_TYPE" type="xsd:string"/>
+        <xsd:element name="CALL_ID" type="xsd:string"/>
+        <xsd:element name="LEG1_NUMBER" type="xsd:string"/>
+        <xsd:element name="LEG2_NUMBER" type="xsd:string"/>
+        <xsd:element name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+        <xsd:element name="CP_SP_NAME" type="xsd:string"/>
+        <xsd:element name="CAMPAIGN_NAME" type="xsd:string"/>
+        <xsd:element name="ANSWER_TIMEOUT" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- MakeTromboneCallResponse -->
+  <xsd:element name="MakeOutgoingCallResponse">
+    <xsd:annotation>
+      <xsd:documentation>format MakeOutgoingCallResponse</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="return" type="dataArrayCall"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ReleaseCallRequest -->
+  <xsd:element name="ReleaseCall">
+    <xsd:annotation>
+      <xsd:documentation>format ReleaseCallRequest</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="REQ_TYPE" type="xsd:string"/>
+        <xsd:element name="CALL_ID" type="xsd:string"/>
+        <xsd:element name="RELEASED_LEG" type="xsd:string"/>
+        <xsd:element name="LEG1_NUMBER" type="xsd:string"/>
+        <xsd:element name="LEG2_NUMBER" type="xsd:string"/>
+        <xsd:element name="SERVICE_NOTIFY_CALLBACK" type="xsd:string"/>
+        <xsd:element name="CP_SP_NAME" type="xsd:string"/>
+        <xsd:element name="CAMPAIGN_NAME" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ReleaseCallResponse -->
+  <xsd:element name="ReleaseCallResponse">
+    <xsd:annotation>
+      <xsd:documentation>format ReleaseCallResponse</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="return" type="dataArrayCall"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- setExtStateRequest -->
+  <xsd:element name="setExtState">
+    <xsd:annotation>
+      <xsd:documentation>format setExtStateRequest</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ext" type="xsd:string"/>
+        <xsd:element name="stateid" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- setExtStateResponse -->
+  <xsd:element name="setExtStateResponse">
+    <xsd:annotation>
+      <xsd:documentation>format setExtStateResponse</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="return" type="dataArrayCall"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

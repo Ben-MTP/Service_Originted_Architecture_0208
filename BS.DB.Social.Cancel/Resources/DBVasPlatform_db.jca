@@ -1,0 +1,13 @@
+<adapter-config name="DBVasPlatform" adapter="db" wsdlLocation="DBVasPlatform.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="neo_vas_platform" location="eis/DB/vas_platform"/>
+  <endpoint-interaction portType="DBVasPlatform_ptt" operation="DBVasPlatform">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="VAS_PLATFORM"/>
+      <property name="PackageName" value="SOA_PACKAGE_DATA"/>
+      <property name="ProcedureName" value="PACAKGE_SOCIAL_CANCEL"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

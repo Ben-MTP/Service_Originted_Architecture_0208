@@ -1,0 +1,32 @@
+<wsdl:definitions
+     name="socketReference"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/socket/VASPLatformServiceBus/DemoSocketClient/socketReference"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/socket/VASPLatformServiceBus/DemoSocketClient/socketReference"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:msg_request_reply="http://vasplatform.mobifone.vn"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="OutboundRequestReply_plt" >
+    <plt:role name="OutboundRequestReply_role" >
+      <plt:portType name="tns:OutboundRequestReply_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://vasplatform.mobifone.vn" schemaLocation="../Schemas/NEOFormat.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="request_msg_requsest">
+        <wsdl:part name="request" element="msg_request_reply:request"/>
+    </wsdl:message>
+    <wsdl:message name="response_msg_reply">
+        <wsdl:part name="response" element="msg_request_reply:response"/>
+    </wsdl:message>
+    <wsdl:portType name="OutboundRequestReply_ptt">
+        <wsdl:operation name="OutboundRequestReply">
+            <wsdl:input message="tns:request_msg_requsest"/>
+            <wsdl:output message="tns:response_msg_reply"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

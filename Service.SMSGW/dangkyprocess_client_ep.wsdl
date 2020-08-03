@@ -1,0 +1,49 @@
+<wsdl:definitions name="DangKyProcess" targetNamespace="http://xmlns.oracle.com/VASplatformSOA/SOA_DangKy/DangKyProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/VASplatformSOA/SOA_DangKy/DangKyProcess" xmlns:ns1="http://vasplatform.mobifone.vn" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:cor="http://xmlns.oracle.com/VASplatformSOA/SOA_DangKy/DangKyProcess/correlationset" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:documentation>
+        <abstractWSDL>http://localhost:7101/soa-infra/services/default/SOA.DangKy!1.0/WSDLs/DangKyProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="DangKyProcess">
+        <plnk:role name="DangKyProcessProvider" portType="client:DangKyProcess"/>
+    </plnk:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:msisdn" element="ns1:request">
+        <vprop:query>ns1:Parameters/ns1:Parameter[ns1:name = 'MSISDN']/ns1:value</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:service_code" element="ns1:request">
+        <vprop:query>ns1:Parameters/ns1:Parameter[ns1:name = 'SERVICE_CODE']/ns1:value</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="http://xmlns.oracle.com/VASplatformSOA/SOA_DangKy/DangKyProcess/correlationset" location="WSDL_-1782951194.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://vasplatform.mobifone.vn" schemaLocation="XMLSchema_533045177.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="DangKyProcessRequestMessage">
+        <wsdl:part name="payload" element="ns1:request"/>
+    </wsdl:message>
+    <wsdl:message name="DangKyProcessResponseMessage">
+        <wsdl:part name="payload" element="ns1:response"/>
+    </wsdl:message>
+    <wsdl:portType name="DangKyProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:DangKyProcessRequestMessage"/>
+            <wsdl:output message="client:DangKyProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="DangKyProcessBinding" type="client:DangKyProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="dangkyprocess_client_ep">
+        <wsdl:port name="DangKyProcess_pt" binding="client:DangKyProcessBinding">
+            <soap:address location="http://localhost:7101/soa-infra/services/default/SOA.DangKy!1.0*soa_d6f523e1-ae4f-4759-9df3-6e5c80276d5a/dangkyprocess_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

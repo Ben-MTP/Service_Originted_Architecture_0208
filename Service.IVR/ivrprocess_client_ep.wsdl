@@ -1,0 +1,46 @@
+<wsdl:definitions name="IVRProcess" targetNamespace="http://xmlns.oracle.com/VASplatformSOA/IVR_Workflow/IVRProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/VASplatformSOA/IVR_Workflow/IVRProcess" xmlns:ns1="http://vasplatform.mobifone.vn" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:cor="http://xmlns.oracle.com/VASplatformSOA/IVR_Workflow/IVRProcess/correlationset" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:documentation>
+        <abstractWSDL>http://localhost:7101/soa-infra/services/default/IVR_Workflow!1.0/WSDLs/IVRProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="IVRProcess">
+        <plnk:role name="IVRProcessProvider" portType="client:IVRProcess"/>
+    </plnk:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:call_id" element="ns1:request">
+        <vprop:query>ns1:Parameters/ns1:Parameter[ns1:name = 'CALL_ID']/ns1:value</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="http://xmlns.oracle.com/VASplatformSOA/IVR_Workflow/IVRProcess/correlationset" location="WSDL_714514710.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://vasplatform.mobifone.vn" schemaLocation="XMLSchema_1541664231.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="IVRProcessRequestMessage">
+        <wsdl:part name="payload" element="ns1:request"/>
+    </wsdl:message>
+    <wsdl:message name="IVRProcessResponseMessage">
+        <wsdl:part name="payload" element="ns1:response"/>
+    </wsdl:message>
+    <wsdl:portType name="IVRProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:IVRProcessRequestMessage"/>
+            <wsdl:output message="client:IVRProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="IVRProcessBinding" type="client:IVRProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ivrprocess_client_ep">
+        <wsdl:port name="IVRProcess_pt" binding="client:IVRProcessBinding">
+            <soap:address location="http://localhost:7101/soa-infra/services/default/IVR_Workflow!1.0*soa_a846e832-b24b-45de-9f93-c335de2ee8aa/ivrprocess_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

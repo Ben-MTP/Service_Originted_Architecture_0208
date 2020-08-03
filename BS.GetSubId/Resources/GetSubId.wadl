@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://vasplatform.mobifone.vn" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="GetSubId">RestReference</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://vasplatform.mobifone.vn" schemaLocation="../Schemas/NEOFormat.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/generate-sub-id">
+         <method name="GET" soa:wsdlOperation="GET">
+            <request soa:paramElement="pns:getSubIdRequest" xmlns:pns="http://vasplatform.mobifone.vn">
+               <param name="msisdn" style="query" soa:expression="$msg.request/ns0:MSISDN" type="xsd:string"/>
+               <param name="serviceId" style="query" soa:expression="$msg.request/ns0:SERVICE_ID" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:getSubIdResponse" xmlns:cns="http://vasplatform.mobifone.vn"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

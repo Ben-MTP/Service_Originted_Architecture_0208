@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="BS_IVR/WSDLs/BS_IVR"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/VASPLatformServiceBus/BS_IVR/BS_IVR</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="error" name="error-afc0a5f.N66f2c704.0.16e48f8610f.N7e38">
+            <con:stage id="_StageId-afc0a5f.N66f2c704.0.16e48f8610f.N7e37" name="Catch Exception">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e34</con1:id>
+                        <con2:location>
+                            <con1:xpathText>$body</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<tns:response  xmlns:tns="http://vasplatform.mobifone.vn">
+   <tns:STATUS>1</tns:STATUS>
+   <tns:STATUS_MESSAGE>ERROR</tns:STATUS_MESSAGE>
+   <tns:Parameters>
+            <tns:Parameter>
+               <tns:name>FAULT_CODE</tns:name>
+               <tns:value>{$body/soap-env:Fault/faultcode/text()}</tns:value>
+            </tns:Parameter>
+            <tns:Parameter>
+               <tns:name>FAULT_STRING</tns:name>
+               <tns:value>{$body/soap-env:Fault/faultstring/text()}</tns:value>
+            </tns:Parameter>
+         </tns:Parameters>
+</tns:response>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e31</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:route-node name="RouteNode1" error-handler="error-afc0a5f.N66f2c704.0.16e48f8610f.N7e38">
+                <con:context>
+                    <con1:userNsDecl prefix="vas" namespace="http://vasplatform.mobifone.vn"/>
+                </con:context>
+                <con:actions>
+                    <con3:routingTable>
+                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7f87</con1:id>
+                        <con3:expression>
+                            <con1:xqueryText>$body/vas:request/vas:Parameters/vas:Parameter[vas:name = 'METHOD']/vas:value</con1:xqueryText>
+                        </con3:expression>
+                        <con3:case id="_BranchId-afc0a5f.N66f2c704.0.16e48f8610f.N7f86">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'MakeOutgoingCall'</con3:value>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7f85</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>MakeOutgoingCall</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:assign varName="request">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e05</con1:id>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/MakeOutgoingCallRequest"/>
+                                                <con1:input>$body/vas:request</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f7a</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e6d</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>MakeOutgoingCallRequest ---------------------> $request</con4:message>
+                                    </con4:log>
+                                </con3:outboundTransform>
+                                <con3:responseTransform>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e6a</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>MakeOutgoingCallResponse ---------------------> response</con4:message>
+                                    </con4:log>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e1a</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/MakeOutgoingCallResponse"/>
+                                                <con1:input>$body/*:MakeOutgoingCallResponse/*:return</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:replace>
+                                </con3:responseTransform>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-afc0a5f.N66f2c704.0.16e48f8610f.N7eed">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'MakeTromboneCall'</con3:value>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7eec</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>MakeTromboneCall</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:assign varName="request">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e09</con1:id>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/MakeTromboneCallRequest"/>
+                                                <con1:input>$body/vas:request</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f35</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e14</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>MakeTromboneCallRequest ---------------------> $request</con4:message>
+                                    </con4:log>
+                                </con3:outboundTransform>
+                                <con3:responseTransform>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e0e</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>MakeTromboneCallResponse ---------------------> $body</con4:message>
+                                    </con4:log>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e11</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/MakeTromboneCallResponse"/>
+                                                <con1:input>$body/*:MakeTromboneCallResponse/*:return</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:replace>
+                                </con3:responseTransform>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-afc0a5f.N66f2c704.0.16e48f8610f.N7ee8">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'PlayFile'</con3:value>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7ee7</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>PlayFile</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:assign varName="request">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7e01</con1:id>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/PlayFileRequest"/>
+                                                <con1:input>$body/vas:request</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f42</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7dfe</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>PlayFileRequest ---------------------> $request</con4:message>
+                                    </con4:log>
+                                </con3:outboundTransform>
+                                <con3:responseTransform>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7df8</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>PlayFileResponse ---------------------> $body</con4:message>
+                                    </con4:log>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7df5</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/PlayFileResponse"/>
+                                                <con1:input>$body/*:PlayFileResponse/*:return</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:replace>
+                                </con3:responseTransform>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-afc0a5f.N66f2c704.0.16e48f8610f.N7ee3">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'Recording'</con3:value>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7ee2</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>Recording</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:assign varName="request">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7df1</con1:id>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/RecordingRequest"/>
+                                                <con1:input>$body/vas:request</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f3f</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7dec</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>PlayFileRequest ---------------------> $request</con4:message>
+                                    </con4:log>
+                                </con3:outboundTransform>
+                                <con3:responseTransform>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d4e</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>RecordingResponse ---------------------> $body</con4:message>
+                                    </con4:log>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d1a</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/PlayFileResponse"/>
+                                                <con1:input>$body/*:RecordingResponse/*:return</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:replace>
+                                </con3:responseTransform>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-afc0a5f.N66f2c704.0.16e48f8610f.N7ede">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'ReleaseCall'</con3:value>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7edd</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>ReleaseCall</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:assign varName="request">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d16</con1:id>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/ReleaseCallRequest"/>
+                                                <con1:input>$body/vas:request</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f3c</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d13</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>ReleaseCall ---------------------> $request</con4:message>
+                                    </con4:log>
+                                </con3:outboundTransform>
+                                <con3:responseTransform>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d08</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>ReleaseCallResponse ---------------------> $body</con4:message>
+                                    </con4:log>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d0b</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/PlayFileResponse"/>
+                                                <con1:input>$body/*:ReleaseCallResponse/*:return</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:replace>
+                                </con3:responseTransform>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-afc0a5f.N66f2c704.0.16e48f8610f.N7ed9">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'setExtState'</con3:value>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7ed8</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>setExtState</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:assign varName="request">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7cfe</con1:id>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/setExtStateRequest"/>
+                                                <con1:input>$body/vas:request</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f39</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7d01</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$request</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>setExtState ---------------------> $request</con4:message>
+                                    </con4:log>
+                                </con3:outboundTransform>
+                                <con3:responseTransform>
+                                    <con4:log>
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7cf6</con1:id>
+                                        <con4:logLevel>warning</con4:logLevel>
+                                        <con4:expr>
+                                            <con1:xqueryText>$body</con1:xqueryText>
+                                        </con4:expr>
+                                        <con4:message>setExtStateResponse ---------------------> $body</con4:message>
+                                    </con4:log>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-afc0a5f.N66f2c704.0.16e48f8610f.N7cf9</con1:id>
+                                        <con2:location>
+                                            <con1:xpathText>$body</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                            <con1:xsltTransform>
+                                                <con1:resource ref="BS_IVR/XSLTs/PlayFileResponse"/>
+                                                <con1:input>$body/*:setExtStateResponse/*:return</con1:input>
+                                            </con1:xsltTransform>
+                                        </con2:expr>
+                                    </con2:replace>
+                                </con3:responseTransform>
+                            </con3:route>
+                        </con3:case>
+                        <con3:defaultCase>
+                            <con3:route>
+                                <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f2b</con1:id>
+                                <con3:service ref="BS_IVR/BusinessServiceIVR" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>MakeOutgoingCall</con3:operation>
+                                <con3:outboundTransform>
+                                    <con2:Error>
+                                        <con1:id>_ActionId-afc0a5f.24e99b1c.0.16e5872c262.N7f28</con1:id>
+                                        <con2:errCode>111</con2:errCode>
+                                    </con2:Error>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:defaultCase>
+                    </con3:routingTable>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

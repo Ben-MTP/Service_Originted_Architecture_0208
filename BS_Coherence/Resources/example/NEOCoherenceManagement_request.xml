@@ -1,0 +1,16 @@
+<request xmlns="http://vasplatform.mobifone.vn">
+   <Parameters>
+      <Parameter>
+         <name>name5</name>
+         <value>value6</value>
+      </Parameter>
+   </Parameters>
+   <CacheValue>
+      <Parameters>
+         <Parameter>
+            <name>name7</name>
+            <value>value8</value>
+         </Parameter>
+      </Parameters>
+   </CacheValue>
+</request>

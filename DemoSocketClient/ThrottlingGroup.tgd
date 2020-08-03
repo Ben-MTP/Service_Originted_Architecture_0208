@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:ThrottlingGroupResource xmlns:con="http://www.bea.com/wli/sb/resources/config">
+    <con:description>Throttling request</con:description>
+    <con:settings>
+        <con:enabled>true</con:enabled>
+        <con:maxConcurrency>100</con:maxConcurrency>
+        <con:TTL>500</con:TTL>
+        <con:queueSize>100</con:queueSize>
+    </con:settings>
+</con:ThrottlingGroupResource>

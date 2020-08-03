@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns:composite xmlns:ns="http://xmlns.oracle.com/sca/1.0">
+    <ns:reference>
+        <ns:interface src="BusinessService:BS.Diameter.Debit/RestReference"/>
+    </ns:reference>
+    <ns:reference>
+        <ns:interface src="BusinessService:BS.Diameter.Debit/putCoherence"/>
+    </ns:reference>
+    <ns:reference>
+        <ns:interface src="BusinessService:BS.Diameter.Debit/LookupCoherence"/>
+    </ns:reference>
+</ns:composite>

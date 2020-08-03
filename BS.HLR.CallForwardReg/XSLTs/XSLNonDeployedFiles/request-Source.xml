@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<request xmlns="http://vasplatform.mobifone.vn">
+   <Parameters>
+      <Parameter>
+         <name>P_CMD</name>
+         <value>value2</value>
+      </Parameter>
+      <Parameter>
+         <name>SERCODE</name>
+         <value>value4</value>
+      </Parameter>
+      <Parameter>
+         <name>name5</name>
+         <value>value6</value>
+      </Parameter>
+   </Parameters>
+</request>

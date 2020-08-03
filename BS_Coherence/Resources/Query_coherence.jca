@@ -1,0 +1,11 @@
+<adapter-config name="Query" adapter="coherence" wsdlLocation="Query.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/Coherence/VasPlatform"/>
+  <endpoint-interaction portType="Query_ptt" operation="Query" UICacheItemType="XML">
+    <interaction-spec className="oracle.tip.adapter.coherence.jca.CoherenceInteractionSpec">
+      <property name="CacheOperation" value="query"/>
+      <property name="CacheName" value="VasPlatformCache"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

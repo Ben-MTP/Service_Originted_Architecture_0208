@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://vasplatform.mobifone.vn" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="RestReference">RestReference</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://vasplatform.mobifone.vn" schemaLocation="../Schemas/NEOFormat.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/rtec">
+         <method name="POST" soa:wsdlOperation="execute">
+            <request>
+               <representation mediaType="application/xml" element="cns:content" xmlns:cns="http://vasplatform.mobifone.vn"/>
+               <representation mediaType="application/json" element="cns:content" xmlns:cns="http://vasplatform.mobifone.vn"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:response" xmlns:cns="http://vasplatform.mobifone.vn"/>
+               <representation mediaType="application/json" element="cns:response" xmlns:cns="http://vasplatform.mobifone.vn"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

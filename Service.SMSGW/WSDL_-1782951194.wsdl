@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions
+     name="properties"
+     targetNamespace="http://xmlns.oracle.com/VASplatformSOA/SOA_DangKy/DangKyProcess/correlationset"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:cor1="http://vasplatform.mobifone.vn"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <vprop:property name="msisdn" element="cor1:request"/>
+    <vprop:property name="service_code" element="cor1:request"/>
+</wsdl:definitions>
